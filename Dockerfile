@@ -1,16 +1,13 @@
 # Usa la imagen oficial de Ubuntu
 FROM ubuntu:20.04
 
-# Actualiza e instala paquetes necesarios
-RUN apt-get update && apt-get install -y \
-    curl \
-    wget \
-    vim \
-    && rm -rf /var/lib/apt/lists/*
+# Instala ttyd y otros paquetes necesarios
+RUN apt-get update && apt-get install -y ttyd curl wget vim
 
-# Establece el directorio de trabajo
-WORKDIR /app
+# Exponer el puerto 7681 (puerto por defecto de ttyd)
+EXPOSE 7681
 
-# Comando para mantener el contenedor corriendo
-CMD ["tail", "-f", "/dev/null"]
+# Comando para iniciar ttyd
+CMD ["ttyd", "-p", "7681", "bash"]
+
 
