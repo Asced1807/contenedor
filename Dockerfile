@@ -1,16 +1,13 @@
 # Usa la imagen oficial de Ubuntu
 FROM ubuntu:20.04
 
-# Actualiza el índice de paquetes e instala dependencias necesarias
+# Actualiza el índice de paquetes e instala solo las dependencias necesarias
 RUN apt-get update && apt-get install -y \
-    build-essential \
     cmake \
     git \
     libjson-c-dev \
     libwebsockets-dev \
-    curl \
-    wget \
-    vim
+    && rm -rf /var/lib/apt/lists/*
 
 # Clona el repositorio de ttyd y compílalo
 RUN git clone https://github.com/tsl0922/ttyd.git /tmp/ttyd \
