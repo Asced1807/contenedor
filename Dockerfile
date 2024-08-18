@@ -1,6 +1,9 @@
 # Usa la imagen oficial de Ubuntu
 FROM ubuntu:20.04
 
+# Evita solicitudes interactivas durante la construcción del contenedor
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Actualiza el índice de paquetes e instala solo las dependencias necesarias
 RUN apt-get update && apt-get install -y \
     cmake \
@@ -26,6 +29,7 @@ EXPOSE 7681
 
 # Comando para iniciar ttyd
 CMD ["ttyd", "-p", "7681", "bash"]
+
 
 
 
