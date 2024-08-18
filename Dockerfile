@@ -1,16 +1,12 @@
 # Usa la imagen oficial de Ubuntu
 FROM ubuntu:20.04
 
-# Evita solicitudes interactivas durante la construcción del contenedor
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Actualiza el índice de paquetes e instala solo las dependencias necesarias
+# Actualiza el índice de paquetes e instala dependencias necesarias
 RUN apt-get update && apt-get install -y \
-    cmake \
     git \
-    libjson-c-dev \
+    cmake \
     libwebsockets-dev \
-    && rm -rf /var/lib/apt/lists/*
+    build-essential
 
 # Clona el repositorio de ttyd y compílalo
 RUN git clone https://github.com/tsl0922/ttyd.git /tmp/ttyd \
@@ -27,8 +23,9 @@ RUN rm -rf /tmp/ttyd
 # Exponer el puerto 7681 (puerto por defecto de ttyd)
 EXPOSE 7681
 
-# Comando para iniciar ttyd
-CMD ["ttyd", "-p", "7681", "bash"]
+# Comando para iniciar ttyd con todos los permisos
+CMD ["ttyd", "--writable", "-p", "7681", "bash"]
+
 
 
 
